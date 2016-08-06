@@ -19,10 +19,17 @@ public class Card {
     	return rank;
     }
     
-    
     @Override
     public String toString() {
-        return (rank + " of " + suit).toLowerCase();
+    	String card = 	"\n ▁▁▁▁▁\n" +
+    				  	"|"+rank+suit+"\t  |\n" +
+    				  	"|\t" + "  |\n"    +
+    				  	"|    "+suit+"    |\n" +
+    				  	"|\t  |\n" +
+    				  	"|\n".format("|%8s%s|", rank, suit) +
+    				  	"\n ▔▔▔▔▔";
+    	
+        return card;
     }
     
     

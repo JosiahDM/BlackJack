@@ -29,13 +29,24 @@ public class BlackjackGame {
 		}
 	}
 
+	public String faceDown() {
+    	String card = 	"\n ▁▁▁▁▁\n" +
+			  			"|░░░░░░░░░|\n" +
+		  				"|░░░░░░░░░|\n"    +
+	  					"|░░░░░░░░░|\n" +
+	  					"|░░░░░░░░░|\n" +
+	  					"|░░░░░░░░░|\n"+
+	  					" ▔▔▔▔▔";
+    	return card;
+	}
+	
 	public void displayHand(Player player, boolean hide) {
 		if (player == dealer && hide == true) {
 			Hand hand = player.getHand();
-			System.out.println(player.getName() + " has " + hand.subList(0, hand.size()-1) + " one FaceDown");
+			System.out.println(player.getName() + " has " + hand.getCardsInRange(0, hand.size()-1) + faceDown());
 		} else {
 			System.out.println(	player.getName() + " has " + player.getHand() + 
-							" equal to: " + player.getHand().getValueOfHand());
+							"\nEqual to: " + player.getHand().getValueOfHand());
 		}
 	}
 
@@ -110,12 +121,13 @@ public class BlackjackGame {
 			if( dealerHand < DEALER_HIT_VALUE ){
 				System.out.println(dealer.getName() + " must hit!");
 				dealer.getHand().addCard(deck.dealCard());
-				displayHand(dealer, false);
 				if (busted(dealer)) { // exit loop if busted
+					displayHand(dealer, false);
 					result = "bust";
 					break;
 				}
 			} else { // else dealer stays, loop condition becomes false. Return "stay".
+				displayHand(dealer, false);
 				System.out.println(dealer.getName() + " stays.");
 				result = "stay";
 			}
@@ -156,7 +168,6 @@ public class BlackjackGame {
 		dealStartingCards();
 		displayHand(player, false);
 		displayHand(dealer, true);
-
 		// Immediately check for blackjack. If so, player wins automatically.
 		if (blackJack(player)) {
 			System.out.println("Blackjack! You win!");

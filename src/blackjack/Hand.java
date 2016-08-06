@@ -17,14 +17,15 @@ public class Hand extends ArrayList<Card> {
 	public List<Card> getCardsInHand() {
 		return this;
 	}
-	
-	public boolean hasAce() {
+	// Check for ace 
+	public int hasAce() { 
+		int val = 0;
 		for (Card card : this) {
 			if (card.getRank() == Rank.ACE) {
-				return true;
+				val++;
 			}
 		} 
-		return false;
+		return val;
 	}
 	
 	public int getValueOfHand() {
@@ -32,16 +33,25 @@ public class Hand extends ArrayList<Card> {
 		for (Card card : this) {
 			value += card.getValue();
 		}
-		if (value > 21 && this.hasAce()) {
-			value -= 10;
+		if (value > 21 && this.hasAce() > 0) {
+			value -= (this.hasAce() * 10);
 		}
 		return value;
 	}
 	
-	// maybe remove this. Replace with good toString method.
-	public void display() {
-		for (Card card : this) {
-			System.out.println(card);
+	public Hand getCardsInRange(int startIndex, int endIndex) {
+		Hand partial = new Hand();
+		for(int i = startIndex; i < endIndex; i++) {
+			partial.add(this.get(i));
 		}
+		return partial;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Card card : this) {
+			sb.append(card);
+		}
+		return sb.toString();
 	}
 }
