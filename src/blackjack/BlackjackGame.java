@@ -90,6 +90,10 @@ public class BlackjackGame {
 		boolean ok = true;
 		String result = "";
 		while (ok) {
+			if ( player.getHand().size() > 4 && !busted(player) ) {
+				result = "win";
+				break;
+			}
 			result = hitOrStay(sc);
 			if (result.equals("stay")) {
 				result = "stay"; 	// break out of loop if they wish to stay 
@@ -140,7 +144,10 @@ public class BlackjackGame {
 		if (playersResult.equals("bust")) {
 			System.out.println("Bust! You lose!");
 			return false;
-		} 
+		} else if (playersResult.equals("win")) {
+			System.out.println("5 cards! You win!");
+			return false;
+		}
 		return true;
 	}
 	
